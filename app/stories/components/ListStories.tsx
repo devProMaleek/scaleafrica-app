@@ -16,9 +16,12 @@ type Props = {
 
 export default function ListStories({ stories }: Props) {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState(
-    window.innerWidth <= 768 ? 8 : 9
-  );
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    if (typeof window === "undefined") {
+      return 9;
+    }
+    return window.innerWidth <= 768 ? 8 : 9;
+  });
 
   useEffect(() => {
     const handleResize = () => {
