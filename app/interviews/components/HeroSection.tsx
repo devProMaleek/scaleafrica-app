@@ -34,7 +34,7 @@ const HeroSection = (props: Props) => {
           Top Interviews With Founders
         </h3>
         <p
-          className={` ${piazzolla.className} text-center text-lg text-[#413667CC] font-medium w-full sm:w-4/5 md:1/2 sm:text-2xl leading-[30px]`}
+          className={` ${piazzolla.className} text-center text-lg mt-1.5 md:mt-3 text-[#413667CC] font-medium w-full sm:w-4/5 md:1/2 sm:text-2xl leading-[30px]`}
         >
           Read about the inspiration behind the vision
         </p>

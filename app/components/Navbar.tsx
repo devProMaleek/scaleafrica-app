@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "@/public/assets/images/logo.svg";
 import { usePathname } from "next/navigation";
 import { piazzolla, robotoSerif } from "../fonts";
@@ -9,7 +9,13 @@ import { piazzolla, robotoSerif } from "../fonts";
 type Props = {};
 
 export default function Navbar({}: Props) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
+
+  const toggleHamburger = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <nav className="bg-white">
@@ -36,7 +42,8 @@ export default function Navbar({}: Props) {
             <button
               data-collapse-toggle="navbar-cta"
               type="button"
-              className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              onClick={toggleHamburger}
+              className="relative inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg cursor-pointer md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-cta"
               aria-expanded="false"
             >
@@ -57,6 +64,64 @@ export default function Navbar({}: Props) {
                 />
               </svg>
             </button>
+          </div>
+          <div
+            className={`absolute right-0 z-30 items-center justify-between ${
+              isOpen === false ? "hidden" : "block"
+            } transition-all duration-250 w-80 top-12 md:order-1`}
+            id="navbar-cta"
+          >
+            <ul className="flex flex-col p-4 mt-4 font-medium bg-gray-100 border border-gray-100 rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <li>
+                <Link
+                  href="/"
+                  className={`${
+                    pathname === "/"
+                      ? "bg-primary-700 text-white"
+                      : "bg-transparent text-gray-900 hover:bg-gray-300"
+                  } block px-3 py-2  rounded `}
+                  aria-current="page"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about-us"
+                  className={`${
+                    pathname === "/about-us"
+                      ? "bg-primary-700 text-white"
+                      : "bg-transparent text-gray-900 hover:bg-gray-300"
+                  } block px-3 py-2  rounded `}
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/stories"
+                  className={`${
+                    pathname === "/stories"
+                      ? "bg-primary-700 text-white"
+                      : "bg-transparent text-gray-900 hover:bg-gray-300"
+                  } block px-3 py-2  rounded `}
+                >
+                  Stories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/interviews"
+                  className={`${
+                    pathname === "/interviews"
+                      ? "bg-primary-700 text-white"
+                      : "bg-transparent text-gray-900 hover:bg-gray-300"
+                  } block px-3 py-2  rounded `}
+                >
+                  Interviews
+                </Link>
+              </li>
+            </ul>
           </div>
           <div
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"

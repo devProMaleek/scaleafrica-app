@@ -7,12 +7,18 @@ import FeaturedStories from "./components/FeaturedStories";
 import InterviewFounders from "./components/InterviewFounder";
 import Newsletter from "./components/Newsletter";
 import Footer from "./components/Footer";
+import TopStoriesSection from "./components/TopStoriesSection";
+import { getHomePageData } from "./actions";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await getHomePageData();
+
+  console.log(data);
   return (
     <main className="">
       <HeroSection />
-      <SwiperSection />
+      {/* <SwiperSection /> */}
+      <TopStoriesSection />
       <QuoteSection backgroundColor="primary" />
       <FeaturedStories />
       <InterviewFounders />
