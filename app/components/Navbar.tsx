@@ -11,9 +11,21 @@ type Props = {};
 export default function Navbar({}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
+  const dynamicPaths = ["/stories/[slug]", "/top-stories/[slug]"];
 
   const toggleHamburger = () => {
     setIsOpen(!isOpen);
+  };
+
+  const isActive = (path: string): boolean => {
+    if (path === pathname) return true;
+
+    return dynamicPaths.some((dynamicPath) => {
+      const basePath = dynamicPath.split("/[")[0];
+      if (path !== basePath) return false;
+      const regex = new RegExp(`^${dynamicPath.replace(/\[.*?\]/g, ".*")}$`);
+      return regex.test(pathname);
+    });
   };
 
   return (
@@ -76,7 +88,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/"
                   className={`${
-                    pathname === "/"
+                    isActive("/")
                       ? "bg-primary-700 text-white"
                       : "bg-transparent text-gray-900 hover:bg-gray-300"
                   } block px-3 py-2  rounded `}
@@ -89,7 +101,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/about-us"
                   className={`${
-                    pathname === "/about-us"
+                    isActive("/about-us")
                       ? "bg-primary-700 text-white"
                       : "bg-transparent text-gray-900 hover:bg-gray-300"
                   } block px-3 py-2  rounded `}
@@ -101,7 +113,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/stories"
                   className={`${
-                    pathname === "/stories"
+                    isActive("/stories")
                       ? "bg-primary-700 text-white"
                       : "bg-transparent text-gray-900 hover:bg-gray-300"
                   } block px-3 py-2  rounded `}
@@ -113,7 +125,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/interviews"
                   className={`${
-                    pathname === "/interviews"
+                    isActive("/interviews")
                       ? "bg-primary-700 text-white"
                       : "bg-transparent text-gray-900 hover:bg-gray-300"
                   } block px-3 py-2  rounded `}
@@ -132,7 +144,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/"
                   className={`${robotoSerif.className} block ${
-                    pathname === "/"
+                    isActive("/")
                       ? "bg-primary text-white hover:bg-white hover:text-primary"
                       : "bg-white text-primary hover:bg-primary hover:text-white"
                   } py-1 transition duration-500 px-4 lg:py-2 lg:px-7 border text-sm/6 font-normal tracking-normal border-gray-400 rounded-full`}
@@ -145,7 +157,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/about-us"
                   className={`${robotoSerif.className} block ${
-                    pathname === "/about-us"
+                    isActive("/about-us")
                       ? "bg-primary text-white hover:bg-white hover:text-primary"
                       : "bg-white text-primary hover:bg-primary hover:text-white"
                   } py-1 transition duration-500 px-4 lg:py-2 lg:px-7 border text-sm/6 font-normal tracking-normal border-gray-400 rounded-full`}
@@ -157,7 +169,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/stories"
                   className={`${robotoSerif.className} block ${
-                    pathname === "/stories"
+                    isActive("/stories")
                       ? "bg-primary text-white hover:bg-white hover:text-primary"
                       : "bg-white text-primary hover:bg-primary hover:text-white"
                   } py-1 transition duration-500 px-4 lg:py-2 lg:px-7 border text-sm/6 font-normal tracking-normal border-gray-400 rounded-full`}
@@ -170,7 +182,7 @@ export default function Navbar({}: Props) {
                 <Link
                   href="/interviews"
                   className={`${robotoSerif.className} block ${
-                    pathname === "/interviews"
+                    isActive("/interviews")
                       ? "bg-primary text-white hover:bg-white hover:text-primary"
                       : "bg-white text-primary hover:bg-primary hover:text-white"
                   } py-1 transition duration-500 px-4 lg:py-2 lg:px-7 border text-sm/6 font-normal tracking-normal border-gray-400 rounded-full`}

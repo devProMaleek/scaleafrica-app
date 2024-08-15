@@ -1,16 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { piazzolla } from "../../fonts";
 import Story from "@/app/components/Story";
 import { Button } from "@nextui-org/react";
-import { StaticImageData } from "next/image";
+import { piazzolla } from "../../fonts";
 
 type Props = {
   stories: {
-    image: StaticImageData;
+    id: string;
     title: string;
-    writtenBy: string;
+    slug: string;
+    content: string;
     createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    metaDescription: string;
+    startup: string;
+    author: string;
+    banner: any;
   }[];
 };
 
@@ -55,13 +61,6 @@ export default function ListStories({ stories }: Props) {
   };
   return (
     <>
-      <div className="w-full mx-auto">
-        <h4
-          className={`${piazzolla.className} text-xl max-w-xl mx-auto text-center tracking-normal text-white md:text-[32px]/[45px] font-medium capitalize`}
-        >
-          Discover all our stories and learn from them
-        </h4>
-      </div>
       <div className="">
         <div className="grid grid-cols-2 gap-y-4 md:gap-y-0 md:grid-cols-3">
           {currentItems.map((story, index) => (

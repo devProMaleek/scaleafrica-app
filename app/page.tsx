@@ -1,32 +1,39 @@
-import HeroSection from "./components/HeroSection";
-import SwiperSection from "./components/SwiperSection";
-import QuoteSection from "./components/QuoteSection";
-import QuickSurvey from "./components/QuickSurvey";
-import ShareStory from "./components/ShareStory";
-import FeaturedStories from "./components/FeaturedStories";
-import InterviewFounders from "./components/InterviewFounder";
-import Newsletter from "./components/Newsletter";
-import Footer from "./components/Footer";
-import TopStoriesSection from "./components/TopStoriesSection";
-import { getHomePageData } from "./actions";
+"use client";
+import { useMemo } from "react";
+import { useFetcher } from "./actions/fetcher";
+import ErrorSection from "./components/ErrorSection";
+import MainContent from "./components/MainContent";
 
-export default async function HomePage() {
-  const data = await getHomePageData();
+export default function HomePage() {
+  const { data, error, isLoading, refetch } = useFetcher<any>("/homepage");
+  const quotes = useMemo(() => {
+    if (data) {
+      return data.data.attributes.quotes.data;
+    }
+  }, [data]);
+  const stories = useMemo(() => {
+    if (data) {
+      return data.data.attributes.homepage.stories;
+    }
+  }, [data]);
+  const topStories = useMemo(() => {
+    if (data) {
+      return data.data.attributes.homepage.topStories;
+    }
+  }, [data]);
 
-  console.log(data);
   return (
-    <main className="">
-      <HeroSection />
-      {/* <SwiperSection /> */}
-      <TopStoriesSection />
-      <QuoteSection backgroundColor="primary" />
-      <FeaturedStories />
-      <InterviewFounders />
-      <QuickSurvey />
-      <ShareStory backgroundColor="white" />
-      <QuoteSection backgroundColor="primary" />
-      <Newsletter backgroundColor="primary" />
-      <Footer backgroundColor="primary" />
-    </main>
+    <>
+      {error ? (
+        <ErrorSection error={error} />
+      ) : (
+        <MainContent
+          isLoading={isLoading}
+          quotes={quotes}
+          stories={stories}
+          topStories={topStories}
+        />
+      )}
+    </>
   );
 }

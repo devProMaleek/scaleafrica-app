@@ -4,9 +4,23 @@ import StakeholderImage from "@/public/assets/images/stakeholder-image.png";
 import CompanyFounder from "@/public/assets/images/company-founder.jpeg";
 import AdditionalGrowth from "@/public/assets/images/additional-growth-Image.png";
 import TopStory from "./TopStory";
-import { piazzolla } from "@/app/fonts";
 
-type Props = {};
+
+type Props = {
+  topStories: {
+    id: string;
+    title: string;
+    slug: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    metaDescription: string;
+    startup: string;
+    author: string;
+    banner: any;
+  }[];
+};
 
 const stories = [
   {
@@ -26,15 +40,15 @@ const stories = [
   },
 ];
 
-export default function TopStoriesList({}: Props) {
+export default function TopStoriesList({ topStories }: Props) {
   return (
     <>
-      <div className="w-full mx-auto scrollbar-hide">
-        <h4 className={`${piazzolla.className} font-medium mb-2 text-lg md:text-2xl lg:text-3xl text-left md:text-center text-primary-800`}>Top Stories</h4>
-        <div className="flex items-center space-x-3 overflow-auto md:space-x-6 lg:space-x-8 flex-nowrap">
-          {stories.map((story, index) => (
-            <TopStory key={index} story={story} color="white" />
-          ))}
+      <div className="w-full mx-auto pt-3 md:pt-5 pb-5 md:py-8">
+        <div className="grid grid-cols-2 gap-y-4 md:gap-y-0 md:grid-cols-3">
+          {topStories &&
+            topStories?.map((topStory, index) => (
+              <TopStory key={index} topStory={topStory} color="white" />
+            ))}
         </div>
       </div>
     </>

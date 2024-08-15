@@ -1,60 +1,52 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Image, { StaticImageData } from "next/image";
 import { notoSans, robotoSerif } from "../fonts";
+import { formatDistance } from "date-fns";
+import StoryImage from "./StoryImage";
+import StoryText from "./StoryText";
+import { useFormattedDate } from "../hooks/useFormattedDate";
+import Link from "next/link";
 
 type Props = {
   color: "white" | "primary";
   story: {
-    image: StaticImageData;
+    id: string;
     title: string;
-    writtenBy: string;
+    slug: string;
+    content: string;
     createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    metaDescription: string;
+    startup: string;
+    author: string;
+    banner: any;
   };
 };
 
 export default function Story({ story, color }: Props) {
+  const date = useFormattedDate(story?.publishedAt);
   return (
     <>
-      <div className="p-2 md:p-5 space-y-5">
-        <div className="w-full h-32 md:h-48 lg:h-64 lg:w-96 rounded">
-          <Image
-            src={story.image}
-            className="object-cover w-full h-full rounded"
-            alt={story.title}
+      <Link href={`/stories/${story.slug}`}>
+        <div className="p-2 md:p-5 space-y-5 cursor-pointer">
+          <StoryImage
+            url={story?.banner?.image?.url}
+            width={story?.banner?.image?.width}
+            height={story?.banner?.image?.height}
+            alt={story?.banner?.image?.name}
+          />
+          <StoryText
+            startup={story?.startup}
+            title={story?.title}
+            author={story?.author}
+            date={date}
+            color={color}
+            notoSansClassName={notoSans.className}
+            robotoSerifClassName={robotoSerif.className}
           />
         </div>
-        <div className="space-y-2 md:space-y-5">
-          <div className="">
-            <p
-              className={`${notoSans.className} uppercase text-xs md:text-sm font-medium tracking-wide text-secondary`}
-            >
-              Startup name
-            </p>
-          </div>
-          <div className="">
-            <h5
-              className={`${robotoSerif.className} ${
-                color === "primary" ? "text-white" : "text-primary-800"
-              } text-base md:text-xl/6  font-semibold`}
-            >
-              {story.title}
-            </h5>
-          </div>
-          <div
-            className={`${notoSans.className} ${
-              color === "primary" ? "text-white" : "text-primary-800"
-            }`}
-          >
-            <span className="text-xs tracking-wide font-normal">
-              {story.writtenBy}
-            </span>{" "}
-            |{" "}
-            <span className="text-xs tracking-wide font-normal">
-              {story.createdAt}
-            </span>
-          </div>
-        </div>
-      </div>
+      </Link>
     </>
   );
 }

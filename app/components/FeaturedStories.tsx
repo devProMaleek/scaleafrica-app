@@ -4,10 +4,26 @@ import React from "react";
 import { piazzolla, robotoSerif } from "../fonts";
 import StoryList from "./StoryList";
 import Link from "next/link";
+import LoadingFeaturedStories from "./LoadingFeaturedStories";
 
-type Props = {};
+type Props = {
+  isLoading: boolean;
+  stories: {
+    id: string;
+    title: string;
+    slug: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    metaDescription: string;
+    startup: string;
+    author: string;
+    banner: any;
+  }[];
+};
 
-export default function FeaturedStories({}: Props) {
+export default function FeaturedStories({ stories, isLoading }: Props) {
   return (
     <>
       <section className="w-full mx-auto bg-white">
@@ -21,7 +37,11 @@ export default function FeaturedStories({}: Props) {
               </h3>
             </div>
             <div className="">
-              <StoryList />
+              {isLoading ? (
+                <LoadingFeaturedStories />
+              ) : (
+                <StoryList stories={stories} />
+              )}
             </div>
             <div className="flex justify-center w-full">
               <Link href="/stories">

@@ -1,59 +1,42 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
-import { notoSans, robotoSerif } from "@/app/fonts";
+import { notoSans } from "@/app/fonts";
+import TopStoryImage from "./TopStoryImage";
+import TopStoryText from "./TopStoryText";
 
 type Props = {
   color: "white" | "primary";
-  story: {
-    image: StaticImageData;
+  topStory?: {
+    id: string;
     title: string;
-    startupCompany: string;
+    slug: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    metaDescription: string;
+    startup: string;
+    author: string;
+    banner: any;
   };
 };
 
-export default function TopStory({ story, color }: Props) {
+export default function TopStory({ topStory, color }: Props) {
   return (
     <>
       <div className="max-w-md p-2 space-y-5 min-w-60 md:min-w-96 md:p-5">
-        <div className="w-full rounded h-36 md:h-48 lg:h-64">
-          <Image
-            src={story.image}
-            className="object-cover w-full h-full rounded"
-            alt={story.title}
-          />
-        </div>
-        <div className="space-y-3 md:space-y-5">
-          <div className="">
-            <p
-              className={`${notoSans.className} text-primary-800 uppercase text-xs md:text-sm font-normal tracking-wide`}
-            >
-              {story.startupCompany}
-            </p>
-          </div>
-          <div className="">
-            <h5
-              className={` ${
-                color === "primary" ? "text-white" : "text-primary-800"
-              } text-sm md:text-base/6 font-semibold`}
-            >
-              {story.title}
-            </h5>
-          </div>
-          <div
-            className={`${
-              notoSans.className
-            } flex items-center justify-between ${
-              color === "primary" ? "text-white" : "text-primary-800"
-            }`}
-          >
-            <span className="text-xs font-normal tracking-normal md:text-sm">
-              Read More
-            </span>
-            <span className="text-xs font-normal tracking-normal md:text-sm">
-              →
-            </span>
-          </div>
-        </div>
+        <TopStoryImage
+          url={topStory?.banner?.image?.url}
+          width={topStory?.banner?.image?.width}
+          height={topStory?.banner?.image?.height}
+          alt={topStory?.banner?.image?.name}
+        />
+        <TopStoryText
+          startup={topStory?.startup}
+          title={topStory?.title}
+          slug={topStory?.slug}
+          color={color}
+          notoSansClassName={notoSans.className}
+        />
       </div>
     </>
   );

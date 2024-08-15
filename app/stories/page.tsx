@@ -1,22 +1,33 @@
+"use client";
 import React from "react";
-import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
-import QuoteSection from "../components/QuoteSection";
-import HeroSection from "./components/HeroSection";
-import StoriesSection from "./components/StoriesSection";
-import TopStoriesSection from "./components/TopStoriesSection";
+import ErrorSection from "./components/ErrorSection";
+import StoriesPageSection from "./components/StoriesPageSection";
+import { useStoriesData } from "../hooks/useStoriesData";
 
 export default function StoriesPage() {
+  const {
+    topStories,
+    stories,
+    quotes,
+    topStoriesIsLoading,
+    storiesIsLoading,
+    quotesIsLoading,
+    pageError,
+  } = useStoriesData();
   return (
     <>
-      <main className="">
-        <HeroSection />
-        <TopStoriesSection />
-        <StoriesSection />
-        <QuoteSection backgroundColor="white" />
-        <Newsletter backgroundColor="white" />
-        <Footer backgroundColor="white" />
-      </main>
+      {pageError ? (
+        <ErrorSection error={pageError} />
+      ) : (
+        <StoriesPageSection
+          storiesIsLoading={storiesIsLoading}
+          topStoriesIsLoading={topStoriesIsLoading}
+          quotesIsLoading={quotesIsLoading}
+          stories={stories}
+          topStories={topStories}
+          quotes={quotes}
+        />
+      )}
     </>
   );
 }
