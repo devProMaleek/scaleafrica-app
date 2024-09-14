@@ -9,7 +9,10 @@ export interface FetcherOptions {
   body?: any;
 }
 
-const baseUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PRODUCTION_API_BASE_URL : process.env.NEXT_DEVELOPMENT_API_BASE_URL;
+const baseUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_API_BASE_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_API_BASE_URL;
+
+console.log(baseUrl);
+console.log(process.env.NEXT_PUBLIC_DEVELOPMENT_API_BASE_URL, process.env.NEXT_PUBLIC_PRODUCTION_API_BASE_URL);
 
 const axiosInstance = axios.create();
 
